@@ -6,8 +6,6 @@ from django.db import models
 class Word(models.Model):
     word = models.CharField(max_length=100)
     definition = models.CharField(max_length=1000)
-    example_sentences = models.ManyToManyField(
-        Sentence, through="WordSentence")
     img_url = models.CharField(max_length=1000, default="")
     # word_type = models.CharField(max_length=100)
     # synonyms = models.CharField(max_length=1000)
@@ -29,16 +27,6 @@ class Sentence(models.Model):
         return self.sentence
 
 
-class WordSentence(models.Model):
-    word = models.ForeignKey(Word)
-    sentence = models.ForeignKey(Sentence)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.sentence
-
-
 class User(models.Model):
     saved_words = models.ManyToManyField(Word, through='UserWord')
     saved_sentences = models.ManyToManyField(Sentence, through='UserSentence')
@@ -50,23 +38,3 @@ class User(models.Model):
 
     def __str__(self):
         return self.username
-
-
-class UserWord(models.Model):
-    user = models.ForeignKey(User)
-    word = models.ForeignKey(Word)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.word
-
-
-class UserSentence(models.Model):
-    user = models.ForeignKey(User)
-    sentence = models.ForeignKey(Sentence)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.sentence
