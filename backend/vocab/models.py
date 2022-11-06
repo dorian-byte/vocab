@@ -20,6 +20,7 @@ class Word(models.Model):
 class Sentence(models.Model):
     sentence = models.CharField(max_length=1000)
     words = models.ManyToManyField(Word, blank=True)
+    words = models.ManyToManyField(Word, through='WordSentence')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
