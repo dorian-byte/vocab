@@ -6,8 +6,10 @@ from django.db import models
 class Word(models.Model):
     word = models.CharField(max_length=100)
     definition = models.CharField(max_length=1000)
+    definition_in_chinese = models.CharField(max_length=1000, default="")
     img_url = models.CharField(max_length=1000, default="")
-    # word_type = models.CharField(max_length=100)
+    pronunciation = models.CharField(max_length=1000, default="")
+    word_type = models.CharField(max_length=100, default="")
     # synonyms = models.CharField(max_length=1000)
     # antonyms = models.CharField(max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -20,7 +22,6 @@ class Word(models.Model):
 class Sentence(models.Model):
     sentence = models.CharField(max_length=1000)
     words = models.ManyToManyField(Word, blank=True)
-    words = models.ManyToManyField(Word, through='WordSentence')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
